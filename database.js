@@ -7,21 +7,19 @@ function connection(cb) {
         password : '',
         database : 'workout-database',
         port: 3306
-      })
+    })
 
-      connection.connect(function (err) {
+    connection.connect(function (err) {
         if (err) {
             console.error('Error connecting: ' + err.stack);
             return;
         }
         cb(connection);
-      })
-      
+    })
 }
 
 function userTable() {
     connection(function(con) {
-
         let sql = `CREATE TABLE IF NOT EXISTS users (
             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             firstname VARCHAR(30) NOT NULL,
@@ -36,13 +34,12 @@ function userTable() {
             )`
             
         con.query(sql , function (error, results, fields) {
-              if (error) throw error;
-              console.log('User database created');
-            });
+            if (error) throw error;
+            console.log('User database created');
+        });
 
         con.end();
     });
-
 }
 
 module.exports = {
