@@ -28,7 +28,7 @@ function userTable() {
             age INT(2) NOT NULL,
             weight INT(3) NOT NULL,
             email VARCHAR(50) NOT NULL UNIQUE,
-            passward VARCHAR(50) NOT NULL,
+            password VARCHAR(50) NOT NULL,
             updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
             )`

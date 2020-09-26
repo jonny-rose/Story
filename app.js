@@ -7,14 +7,16 @@ sql.userTable();
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.get("/", (req, res) => {
-    res.send("Server works");
-});
+    res.sendFile(__dirname + "/templates/signup.html");
+  });
 
-app.post('/signup', (request,response)=> {
-    console.log(request.body)
-    res.json(request.body);
+
+app.post('/signup', (req,res)=> {
+    console.log(req.body)
+    res.json(req.body);
 })
 
 app.listen(3000, () => {
