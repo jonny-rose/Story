@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+    database:
+        image: mariadb:latest
+        container_name: wod_generator_db
+        volumes:
+            - ./volume/database:/var/lib/mysql
+        restart: always
+        ports:
+            - 3307:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_PASSWORD=pass
+            - MYSQL_USER=admin
+            - MYSQL_DATABASE=wod_generator
