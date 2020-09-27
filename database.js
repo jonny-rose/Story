@@ -2,11 +2,11 @@ const mysql = require('mysql');
 
 function connection(cb) {
     const connection = mysql.createConnection({
-        host     : '127.0.0.1',
-        user     : 'root',
-        password : '',
-        database : 'workout-database',
-        port: 3306
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT
     })
 
     connection.connect(function (err) {
@@ -42,8 +42,28 @@ function userTable() {
     });
 }
 
+function findUserByEmailAndPassword(email, password) {
+    return new Promise((resolve, reject)=> {
+        connection(function(con) {
+            let sql = `SELECT * FROM users WHERE email = ? AND password = ?`
+                
+            con.query(sql, [email, password], function (error, results, fields) {
+                if (error) {
+                    reject(err)
+                }
+                console.log(`Finding users in db with email ${email} and password ${password}`);
+
+                resolve(results)
+            });
+    
+            con.end();
+        });
+    })
+}
+
 module.exports = {
-    userTable : userTable
+    userTable : userTable,
+    findUserByEmailAndPassword
 }
 
 
