@@ -13,22 +13,45 @@
 
     <!-- Custom styles for this template -->
     <link href="css/styles.css" rel="stylesheet" />
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body class="text-center">
     <form action="/signup" method="POST" class="form-signin">
       <img class="mb-4" src="image/favicon.ico" alt="" width="72" height="72" />
       <h1 class="h3 mb-3 font-weight-normal">Sign up to Wod Generator</h1>
 
-      <input type="text" name="firstName" class="form-control top" placeholder="First name" required autofocus/>
-      <input type="text" name="lastName" class="form-control middle" placeholder="Last name" required/>
-      <input type="text" name="gender" maxlength="1" class="form-control middle" placeholder="Gender M/F" required/>
-      <input type="number" name="age" min="14" class="form-control middle" placeholder="Age" required/>
+      <input type="text" name="firstName" class="form-control top" id="inputFirstName" placeholder="First name" required autofocus/>
+      <input type="text" name="lastName" class="form-control middle" id="inputLastName" placeholder="Last name" required/>
+      <input type="text" name="gender" maxlength="1" class="form-control middle" id="gender" placeholder="Gender M/F" required/>
+      <input type="number" name="age" min="14" class="form-control middle" id="age" placeholder="Age" required/>
       
-      <input type="email" name="email" class="form-control middle" placeholder="Email" required/>
-      <input type="password" name="password" class="form-control bottom" placeholder="Password" required/>
+      <input type="email" name="email" class="form-control middle" id="email" placeholder="Email" required/>
+      <input type="password" name="password" class="form-control bottom" id="password" placeholder="Password" required/>
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign me up</button>
+      <button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">Sign me up</button>
       
     </form>
+
+    <script>
+      var button = document.getElementById("submit").addEventListener("click", sendForm)
+
+      function sendForm(ev) {
+        ev.preventDefault()
+        var firstName = document.getElementById("inputFirstName").value
+        var lastName = document.getElementById("inputLastName").value
+        var gender = document.getElementById("gender").value
+        var age = document.getElementById("age").value
+        var email = document.getElementById("email").value
+        var password = document.getElementById("password").value
+        axios.post("/signup", {firstName, lastName, gender, age, email, password}).then( function(result){
+          console.log(result.data)
+          window.location.href="https://google.com"
+        }).catch(function(error){
+          console.log(error)
+        })
+        
+      }
+    </script>
   </body>
 </html>

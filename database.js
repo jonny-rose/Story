@@ -26,7 +26,6 @@ function userTable() {
             lastname VARCHAR(30) NOT NULL,
             gender VARCHAR(1) DEFAULT 'M' NOT NULL,
             age INT(2) NOT NULL,
-            weight INT(3) NOT NULL,
             email VARCHAR(50) NOT NULL UNIQUE,
             password VARCHAR(50) NOT NULL,
             updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -49,7 +48,26 @@ function findUserByEmailAndPassword(email, password) {
                 
             con.query(sql, [email, password], function (error, results, fields) {
                 if (error) {
-                    reject(err)
+                    reject(error)
+                }
+                console.log(`Finding users in db with email ${email} and password ${password}`);
+
+                resolve(results)
+            });
+    
+            con.end();
+        });
+    })
+}
+
+function userSignup({firstName, lastName, gender, age, email, password}) {
+    return new Promise((resolve, reject)=> {
+        connection(function(con) {
+            let sql = `Insert into users (firstname, lastname, gender, age, email, password) values (?, ?, ?, ?, ?, ?)`
+                
+            con.query(sql, [firstName, lastName, gender, age, email, password], function (error, results, fields) {
+                if (error) {
+                    reject(error)
                 }
                 console.log(`Finding users in db with email ${email} and password ${password}`);
 
@@ -63,13 +81,13 @@ function findUserByEmailAndPassword(email, password) {
 
 module.exports = {
     userTable : userTable,
-    findUserByEmailAndPassword
+    findUserByEmailAndPassword,
+    userSignup
 }
 
 
 
-// localhost = 127.0.0.1
-// port = 3306
+
 
 
  

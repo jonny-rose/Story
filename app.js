@@ -19,7 +19,11 @@ app.get("/", (req, res) => {
 
 app.post('/signup', (req, res)=> {
     console.log(req.body)
-    res.json(req.body);
+    sql.userSignup(req.body).then(function(result) {
+        res.json({success: true})
+    }).catch(function(error) {
+        res.json({success: false})
+    })
 })
 
 app.post('/login', async (req, res)=> {
